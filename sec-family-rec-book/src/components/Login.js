@@ -1,7 +1,6 @@
 import React from 'react'
 import axios from 'axios'
 import '../index.css'
-import { Form, Field, withFormik } from 'formik'
 import { axiosWithAuth } from '../utils/axiosWithAuth'
 
 
