@@ -2,10 +2,13 @@ import React, { Component } from "react";
 import "../index.css";
 import NavBar from "./NavBar";
 import axios from "axios";
+import { addRecipe, editRecipe } from "../actions/actions";
+import { connect } from "react-redux";
 import { TextField, Button } from "@material-ui/core";
 
-export default class RecipeForm extends Component {
-  state = {
+function RecipeForm(props, { addRecipe, editRecipe}) {
+  
+  const defaultState = {
     newRecipe: {
       title: "",
       source: "",
@@ -13,39 +16,57 @@ export default class RecipeForm extends Component {
       instructions: "",
       category: "",
       photo: "",
-    },
+    }
   };
 
+  const [recipe, setRecipe] = useState(defaultState);
+
+  const [error, setErrors] = useState(defaultState);
+  const [disableButton, setDisableButton] = useState(true);
+
+  function inputText(labelFor,
+                     labelText,
+                     type,
+                     name,
+                     value,
+                     onChange,
+                     errors) {
+            return <label htmlFor={labelFor}>
+                {labelText}
+                 <input type={type}
+                        name={name}
+                        value={value}
+                        onChange={onChange}
+                        errors={errors} />
+            </label>
+                     }
+
   handleChange = (e) => {
-    this.setState({
+    setRecipe({
       newRecipe: {
-        ...this.state.newRecipe,
+        ...recipe,
         [e.target.name]: e.target.value,
       },
     });
   };
 
-  addRecipe = (e) => {
-    e.preventDefault();
-
-    // axios
-    //   .post(
-    //     "",
-    //     this.state.newRecipe
-    //   )
-    //   .then((res) => {
-    //     console.log("Res is: ", res);
-    //     this.props.history.push("/dashboard");
-    //   })
-    //   .catch((err) => console.log("Error is: ", err.response));
-    
-  };
+ const handleSubmit = (e) => {
+   e.preventDefault();
+   if(props.recipeId) {
+     editRecipe({
+       ...recipe,
+       id: props.recipeId
+     });
+   } else {
+     addRecipe(recipe);
+   }
+ }
 
   render() {
     return (
       <div>
         <NavBar />
-        <form onSubmit={this.addRecipe} >
+        <form onSubmit={handleSubmit} >
           <TextField
             type="text"
             name="title"
