@@ -28,16 +28,16 @@ export default class RecipeForm extends Component {
   addRecipe = (e) => {
     e.preventDefault();
 
-    // axios
-    //   .post(
-    //     "",
-    //     this.state.newRecipe
-    //   )
-    //   .then((res) => {
-    //     console.log("Res is: ", res);
-    //     this.props.history.push("/dashboard");
-    //   })
-    //   .catch((err) => console.log("Error is: ", err.response));
+    axios
+      .post(
+        "/recipe",
+        this.state.newRecipe
+      )
+      .then((res) => {
+        console.log("Res is: ", res);
+        this.props.history.push("/dashboard");
+      })
+      .catch((err) => console.log("Error is: ", err.response));
     
   };
 
