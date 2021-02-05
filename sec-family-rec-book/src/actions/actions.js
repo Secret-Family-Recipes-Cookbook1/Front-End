@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { axiosWithAuth } from "../util/axiosWithAuth";
+import { axiosWithAuth } from "../utils/axiosWithAuth";
 
 
 export const FETCHING_DATA_START = 'FETCHING_DATA_START';
@@ -45,6 +45,17 @@ export const addRecipe = (recipe) => (dispatch) => {
 };
 
 export const deleteRecipe = (recipe) => (dispatch) => {
+    axiosWithAuth()
+        .delete(`recipe/${recipe.id}`)
+        .then((res)=>{
+            dispatch({type: DELETE_RECIPE, payload: recipe});
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+};
+
+export const editRecipe = (recipe) => (dispatch) => {
     axiosWithAuth()
     .put(`/recipelist/${recipe.id}`, recipe)
     .then(res => {

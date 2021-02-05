@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import "../index.css";
 import NavBar from "./NavBar";
 import axios from "axios";
@@ -6,7 +6,7 @@ import { addRecipe, editRecipe } from "../actions/actions";
 import { connect } from "react-redux";
 import { TextField, Button } from "@material-ui/core";
 
-function RecipeForm(props, { addRecipe, editRecipe}) {
+function RecipeForm (props, { addRecipe, editRecipe}) {
   
   const defaultState = {
     newRecipe: {
@@ -24,29 +24,14 @@ function RecipeForm(props, { addRecipe, editRecipe}) {
   const [error, setErrors] = useState(defaultState);
   const [disableButton, setDisableButton] = useState(true);
 
-  function inputText(labelFor,
-                     labelText,
-                     type,
-                     name,
-                     value,
-                     onChange,
-                     errors) {
-            return <label htmlFor={labelFor}>
-                {labelText}
-                 <input type={type}
-                        name={name}
-                        value={value}
-                        onChange={onChange}
-                        errors={errors} />
-            </label>
-                     }
 
-  handleChange = (e) => {
+
+  const handleChange = (e) => {
     setRecipe({
       newRecipe: {
         ...recipe,
         [e.target.name]: e.target.value,
-      },
+      }
     });
   };
 
@@ -60,9 +45,9 @@ function RecipeForm(props, { addRecipe, editRecipe}) {
    } else {
      addRecipe(recipe);
    }
- }
+ };
 
-  render() {
+
     return (
       <div>
         <NavBar />
@@ -126,5 +111,10 @@ function RecipeForm(props, { addRecipe, editRecipe}) {
         </form>
       </div>
     );
-  }
+  };
+
+  const mapStateToProps = state => {
+    return {};
 }
+
+export default connect(mapStateToProps, {addRecipe, editRecipe})(RecipeForm);
