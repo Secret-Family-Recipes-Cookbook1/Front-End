@@ -1,57 +1,32 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import "./App.css";
-import { Route, Switch } from "react-router-dom";
-import LoginForm from "./components/Login";
-import RecipesList from "./components/Dashboard";
-import Recipe from "./components/Recipe";
-import Logout from "./components/Logout";
-import RecipeForm from "./components/RecipeForm";
-import HomePage from "./components/HomePage";
-import UpdateForm from "./components/UpdateForm"
-import SignUp from "./components/SignUp"
+import React from 'react';
+import './App.css';
+import { Route } from 'react-router-dom';
+import HomePage from "./components/HomePage"
+import RecipesDashboard from "./components/RecipesDashboard"
+import Dashboard from "./components/Dashboard"
+import SignUp from  "./components/SignUp"
+import Login from "./components/Login"
+import RecipeForm from "./components/RecipeForm"
+import ProtectedRoute from './utils/PrivateRoute';
+import Logout from "./components/LogOut"
 
 function App() {
-  const [items, setItems] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("/recipe")
-      .then((res) => setItems(res.data))
-      .catch((error) => console.log(error));
-  }, []);
-
   return (
     <div className="App">
-      <Switch>
-        <Route path="/recipeform" component={RecipeForm} />
-        <Route path="/logout" component={Logout} />
-
-        <Route
-          exact
-          path="/recipe-list"
-          render={(props) => <RecipesList {...props} items={items} />}
-        />
-
-        <Route
-          path="/recipe-list/:id"
-          exact
-          render={(props) => (
-            <Recipe {...props} items={items} setItems={setItems} />
-          )}
-        />
-
-        <Route
-          path="/item-list/update-item/:id"
-          render={() => <UpdateForm setItems={setItems} />}
-        />
-        <Route path="/signUp" component={SignUp} />
-
-        <Route path="/login" component={LoginForm} />
-        <Route path="/" component={HomePage} />
-      </Switch>
+      <Route exact path="/" component={HomePage} />
+      <Route path="/recipeDashboard" component={RecipesDashboard} />
+      <Route path="/login" component={Login} />
+      <Route path="/signUp" component={SignUp} />
+      <ProtectedRoute path="/recipeform" component={RecipeForm} />
+      <ProtectedRoute path="/logout" component={Logout} />
+      <ProtectedRoute
+        path="/dashboard"
+        component={Dashboard}
+      />
+      
     </div>
   );
 }
 
 export default App;
+

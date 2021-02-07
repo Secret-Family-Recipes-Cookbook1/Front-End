@@ -1,52 +1,92 @@
-import React from 'react'
-import { Button } from 'reactstrap'
-import { Link } from 'react-router-dom'
-import logo from '../images/recipe.jpg'
-import styled from 'styled-components'
+import React from "react";
+import { Link } from "react-router-dom";
+import { Button } from "reactstrap";
+import styled from "styled-components";
+import logo from "../images/recipe.jpg";
+import { getToken } from "../utils/axiosWithAuth";
+// import HomePageSteph from './HomePageSteph';
 
-const Nav = styled.div`
-  margin: 10px;
-`
-const Buttons = styled.div`
-  margin: 30px;
-`
+const NavDiv = styled.div`
+  margin-top: 2%;
+  // display: flex;
+  justify-content: space-between;
+  // margin-left: 15%;
+`;
+const LogoDiv = styled.div`
+  // display: flex;
+`;
+const BottonsDiv = styled.div`
+  margin-top: 1%;
+  margin-bottom: 3%;
+`;
 
-const NavBar = () => {
+export default function NavBar() {
+  const signedIn = getToken();
+  // const id = localStorage.getItem('id');
   return (
     <div>
-      <Nav>
-        <img className='navImage' src={logo} alt='logo' />
-      </Nav>
-      <Buttons>
-        <Link className='navlink' to='/'>
-          <Button color='info'>Home</Button>
-        </Link>
-        <Link className='navlink' to='/login'>
-          <Button color='info'>Log in</Button>
-        </Link>
-
-        <Link className='navlink' to='/logout'>
-          <Button color='info'>Log out</Button>
-        </Link>
-
-       
-        <Link className='navlink'>
-          <Button color='info'>Visitor Dashboard</Button>
-        </Link>
-        <Link className='navlink' to="/login">
-          <Button color='info'>User Dashboard</Button>
-        </Link>
-
-        <Link className='navlink' to="/signUp">
-          <Button color='info'>Sign up</Button>
-        </Link>
-      </Buttons>
-      
-      
-
+      <NavDiv>
+        <LogoDiv>
+          <img className="navImage" src={logo} alt="logo" />
+          <h4 style={{ marginLeft: "10px" }}>
+            Secret <br></br> Family <br></br> Recipes!
+          </h4>
+        </LogoDiv>
+        <BottonsDiv>
+          <Link to="/" className="NavButtons">
+            <Button color="secondary" size="small">
+              Home
+            </Button>
+          </Link>
+          &nbsp;&nbsp;&nbsp;
+          <Button color="secondary" size="small">
+            <a
+              href="https://marketing-page.netlify.app/"
+              className="NavButtons"
+            >
+              {" "}
+              Marketing
+            </a>
+          </Button>
+          &nbsp;&nbsp;&nbsp;
+          <Link to="/recipeDashboard" className="NavButtons">
+            <Button color="secondary" size="small">
+              Visitor Dashboard
+            </Button>
+          </Link>
+          &nbsp;&nbsp;&nbsp;
+          <Link to="/dashboard" className="NavButtons">
+            <Button color="secondary" size="small">
+              User Dashboard
+            </Button>
+          </Link>
+          &nbsp;&nbsp;&nbsp;
+          {!signedIn && (
+            <Link to="/login" className="NavButtons">
+              <Button color="secondary" size="small">
+                Login
+              </Button>
+            </Link>
+          )}
+          &nbsp;&nbsp;&nbsp;
+          {!signedIn && (
+            <Link to="/signUp" className="NavButtons">
+              <Button color="info" size="small">
+                Sign Up
+              </Button>
+            </Link>
+          )}
+          {signedIn && (
+            <Link to="/logout" className="NavButtons">
+              <Button color="info" size="small">
+                LogOut
+              </Button>
+            </Link>
+          )}
+          &nbsp;&nbsp;&nbsp;
+        </BottonsDiv>
+      </NavDiv>
       <hr></hr>
     </div>
-  )
+  );
 }
-
-export default NavBar

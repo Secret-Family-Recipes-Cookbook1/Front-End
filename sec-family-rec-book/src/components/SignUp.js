@@ -90,7 +90,7 @@ const FormikSignupForm = withFormik({
     if (values.username && values.password && values.email) {
       axios
         .post(
-          "/register",
+          "https://back-end-build-weeks.herokuapp.com/api/auth/register",
           values
         )
         .then((res) => {

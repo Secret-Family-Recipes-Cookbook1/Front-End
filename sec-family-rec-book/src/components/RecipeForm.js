@@ -30,7 +30,7 @@ export default class RecipeForm extends Component {
 
     axios
       .post(
-        "/recipe",
+        "https://back-end-build-weeks.herokuapp.com/api/recipes",
         this.state.newRecipe
       )
       .then((res) => {
@@ -38,14 +38,14 @@ export default class RecipeForm extends Component {
         this.props.history.push("/dashboard");
       })
       .catch((err) => console.log("Error is: ", err.response));
-    
+    // .finally(window.location.reaload());
   };
 
   render() {
     return (
       <div>
         <NavBar />
-        <form onSubmit={this.addRecipe} >
+        <form onSubmit={this.addRecipe} style={{ margin: "70px" }}>
           <TextField
             type="text"
             name="title"

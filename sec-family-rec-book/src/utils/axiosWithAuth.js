@@ -1,11 +1,43 @@
-import axios from "axios";
 
-export const axiosWithAuth = () => {
-  const token = window.localStorage.getItem("token");
+
+
+
+
+  
+import axios from 'axios';
+
+export function getToken() {
+  return localStorage.getItem('token');
+}
+
+export default function() {
   return axios.create({
+    baseURL: 'https://back-end-build-weeks.herokuapp.com/',
     headers: {
-      authorization: token
+      Authorization: getToken(),
     },
-    baseURL: "http://localhost:5000"
   });
-};
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// import axios from "axios";
+
+// export const axiosWithAuth = () => {
+//   const token = window.localStorage.getItem("token");
+//   return axios.create({
+//     headers: {
+//       authorization: token
+//     },
+//     baseURL: "http://localhost:5000"
+//   });
+// };
